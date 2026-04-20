@@ -25,10 +25,10 @@ export default function VideoScrubberHero() {
   const [progress, setProgress] = useState(0);
   const [phraseIndex, setPhraseIndex] = useState(0);
 
-  const frameCount = 102;
+  const frameCount = 306;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const currentFrame = (index: number) => (
-    `${basePath}/images/frames/From KlickPin CF Try Cozy rustic wedding decor that bring together style function and viral-worthy inspiration for ideas worth saving right now - Pin-717831628151904794_${index.toString().padStart(3, '0')}.jpg`
+    `${basePath}/images/frames/${(index + 1).toString().padStart(4, '0')}.jpg`
   );
 
   // Rotate phrases every 1.5s
@@ -66,7 +66,7 @@ export default function VideoScrubberHero() {
 
       // Load remaining in larger parallel chunks for speed
       const remainingIndexes = Array.from({ length: frameCount - 5 }, (_, i) => i + 5);
-      const chunkSize = 15;
+      const chunkSize = 30;
       for (let i = 0; i < remainingIndexes.length; i += chunkSize) {
         const chunk = remainingIndexes.slice(i, i + chunkSize);
         await Promise.all(chunk.map(idx => loadImage(idx)));
@@ -158,7 +158,7 @@ export default function VideoScrubberHero() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=2500', // Even tighter for mobile
+        end: '+=5000', // Adjusted for 306 frames
         scrub: 0.15, // Perfect balance for touch fluidity
         pin: true,
         anticipatePin: 1,
