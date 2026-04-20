@@ -189,11 +189,24 @@ export default function VideoScrubberHero() {
       const end = (index + 1) * segmentDuration;
       
       if (index === 0) {
+        // First element: Initially visible
         gsap.set(el, { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all' });
         tl.to(el, { 
-          opacity: 0, y: -20, filter: 'blur(10px)', pointerEvents: 'none', duration: 0.1 
-        }, 0.25);
+          opacity: 0, 
+          y: -20, 
+          filter: 'blur(10px)', 
+          pointerEvents: 'none', 
+          duration: 0.1 
+        }, segmentDuration * 0.9);
+      } else if (index === textElements.length - 1) {
+        // Last element: Fades in and STAYS
+        tl.fromTo(el,
+          { opacity: 0, y: 20, filter: 'blur(10px)', pointerEvents: 'none' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all', duration: 0.1 },
+          start
+        );
       } else {
+        // Middle elements: Fade in and out
         tl.fromTo(el,
           { opacity: 0, y: 20, filter: 'blur(10px)', pointerEvents: 'none' },
           { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all', duration: 0.1 },
