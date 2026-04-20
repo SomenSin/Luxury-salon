@@ -168,52 +168,64 @@ export default function VideoScrubberHero() {
     });
 
     let lastRenderedFrame = -1;
-    tl.to(sequence, {
-      frame: frameCount - 1,
-      ease: "none",
-      onUpdate: () => {
-        const currentFrame = Math.round(sequence.frame);
-        if (currentFrame !== lastRenderedFrame) {
-          render(currentFrame);
-          lastRenderedFrame = currentFrame;
-        }
+    const updateFrames = () => {
+      const currentFrame = Math.round(sequence.frame);
+      if (currentFrame !== lastRenderedFrame) {
+        render(currentFrame);
+        lastRenderedFrame = currentFrame;
       }
-    });
+    };
 
-    // Precise text synchronization
+    // Chapter 1: (Frames 0-101)
+    tl.to(sequence, {
+      frame: 101,
+      ease: "none",
+      onUpdate: updateFrames,
+      duration: 0.33
+    }, 0);
+
+    // Chapter 2: (Frames 102-203)
+    tl.to(sequence, {
+      frame: 203,
+      ease: "none",
+      onUpdate: updateFrames,
+      duration: 0.33
+    }, 0.33);
+
+    // Chapter 3: (Frames 204-305)
+    tl.to(sequence, {
+      frame: 305,
+      ease: "none",
+      onUpdate: updateFrames,
+      duration: 0.34
+    }, 0.66);
+
+    // Precise text synchronization for the 3 chapters
     const textElements = gsap.utils.toArray<HTMLElement>('.hero-text');
-    const segmentDuration = 1 / textElements.length;
-
+    
     textElements.forEach((el, index) => {
-      const start = index * segmentDuration;
-      const end = (index + 1) * segmentDuration;
-      
       if (index === 0) {
-        // First element: Initially visible
+        // Section 1: Starts visible
         gsap.set(el, { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all' });
         tl.to(el, { 
-          opacity: 0, 
-          y: -20, 
-          filter: 'blur(10px)', 
-          pointerEvents: 'none', 
-          duration: 0.1 
-        }, segmentDuration * 0.9);
+          opacity: 0, y: -30, filter: 'blur(10px)', pointerEvents: 'none', duration: 0.1 
+        }, 0.28);
       } else if (index === textElements.length - 1) {
-        // Last element: Fades in and STAYS
+        // Section 3: Fades in at 0.66 and stays
         tl.fromTo(el,
-          { opacity: 0, y: 20, filter: 'blur(10px)', pointerEvents: 'none' },
+          { opacity: 0, y: 30, filter: 'blur(10px)', pointerEvents: 'none' },
           { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all', duration: 0.1 },
-          start
+          0.66
         );
       } else {
-        // Middle elements: Fade in and out
+        // Section 2: Fades in at 0.33 and out at 0.61
         tl.fromTo(el,
-          { opacity: 0, y: 20, filter: 'blur(10px)', pointerEvents: 'none' },
+          { opacity: 0, y: 30, filter: 'blur(10px)', pointerEvents: 'none' },
           { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all', duration: 0.1 },
-          start
+          0.33
         ).to(el,
-          { opacity: 0, y: -20, filter: 'blur(10px)', pointerEvents: 'none', duration: 0.1 },
-          end - 0.05
+          { opacity: 0, y: -30, filter: 'blur(10px)', pointerEvents: 'none', duration: 0.1 },
+          0.61
         );
       }
     });
