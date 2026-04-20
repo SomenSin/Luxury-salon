@@ -281,6 +281,7 @@ export default function VideoScrubberHero() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
