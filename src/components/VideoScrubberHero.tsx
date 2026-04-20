@@ -7,12 +7,11 @@ import styles from './VideoScrubberHero.module.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const LOADING_PHRASES = [
-  "SCULPTING SILHOUETTES...",
-  "CURATING RADIANCE...",
-  "DEFINING LUXURY...",
-  "CRAFTING CONFIDENCE...",
-  "STYLING THE FUTURE...",
-  "DOLLY STUDIO EXPERIENCE..."
+  "WELCOME TO DOLLY STUDIO",
+  "PREPARING YOUR EXPERIENCE",
+  "LOADING CINEMATIC VISUALS",
+  "ALMOST READY",
+  "DOLLY STUDIO EXPERIENCE"
 ];
 
 export default function VideoScrubberHero() {
@@ -31,51 +30,48 @@ export default function VideoScrubberHero() {
     `${basePath}/images/frames/${(index + 1).toString().padStart(4, '0')}.jpg`
   );
 
-  // Rotate phrases every 1.5s
+  // Rotate phrases every 2s for readability
   useEffect(() => {
     if (loaded) return;
     const interval = setInterval(() => {
       setPhraseIndex(prev => (prev + 1) % LOADING_PHRASES.length);
-    }, 1500);
+    }, 2000);
     return () => clearInterval(interval);
   }, [loaded]);
 
-  // Preload images into memory - Optimized for speed
+  // High-performance streaming preloader
   useEffect(() => {
     let loadedCount = 0;
     const preloadedImages: HTMLImageElement[] = [];
+    const essentialFrames = 10; // Frames needed to start the page
 
-    const loadImage = (index: number) => {
-      return new Promise<void>((resolve) => {
+    const loadAll = () => {
+      for (let i = 0; i < frameCount; i++) {
         const img = new Image();
-        img.src = currentFrame(index);
+        img.src = currentFrame(i);
         img.onload = () => {
           loadedCount++;
-          setProgress(Math.round((loadedCount / frameCount) * 100));
-          resolve();
+          preloadedImages[i] = img;
+          
+          // Update progress bar
+          const currentProgress = Math.round((loadedCount / frameCount) * 100);
+          setProgress(currentProgress);
+
+          // Once essential frames are in, we can potentially show the canvas
+          // but we wait for 100% for the "smooth scrub" guarantee
+          if (loadedCount === frameCount) {
+            setImages(preloadedImages);
+            setLoaded(true);
+          }
         };
-        img.onerror = () => resolve();
-        preloadedImages[index] = img;
-      });
-    };
-
-    const loadAll = async () => {
-      // Load first 5 frames concurrently for immediate display
-      await Promise.all([0, 1, 2, 3, 4].map(idx => loadImage(idx)));
-      setImages([...preloadedImages]);
-
-      // Load remaining in larger parallel chunks for speed
-      const remainingIndexes = Array.from({ length: frameCount - 5 }, (_, i) => i + 5);
-      const chunkSize = 30;
-      for (let i = 0; i < remainingIndexes.length; i += chunkSize) {
-        const chunk = remainingIndexes.slice(i, i + chunkSize);
-        await Promise.all(chunk.map(idx => loadImage(idx)));
-        // Throttle state updates slightly to avoid UI thrashing
-        if (i % 30 === 0) setImages([...preloadedImages]);
+        img.onerror = () => {
+          loadedCount++;
+          if (loadedCount === frameCount) {
+            setImages(preloadedImages);
+            setLoaded(true);
+          }
+        };
       }
-      
-      setImages([...preloadedImages]);
-      setLoaded(true);
     };
 
     loadAll();

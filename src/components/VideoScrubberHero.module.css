@@ -245,7 +245,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
+  transition: opacity 1s ease, visibility 1s;
   pointer-events: auto;
 }
 
@@ -256,23 +256,40 @@
 }
 
 .loaderContent {
-  width: 300px;
+  width: 400px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 32px;
 }
 
 .loaderLogo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  color: #EED7B8;
+  letter-spacing: 0.5em;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.rotatingPhrase {
+  font-size: 0.85rem;
   color: #EED7B8;
   letter-spacing: 0.3em;
-  font-weight: 400;
+  text-transform: uppercase;
+  font-weight: 300;
+  height: 1.2rem;
+  opacity: 0.7;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.8; transform: translateY(-2px); }
 }
 
 .loaderBar {
-  width: 100%;
+  width: 200px;
   height: 1px;
   background: rgba(238, 215, 184, 0.1);
   overflow: hidden;
@@ -282,13 +299,13 @@
 .loaderProgress {
   height: 100%;
   background: #EED7B8;
-  transition: width 0.3s ease;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .loaderText {
   color: #EED7B8;
-  font-family: var(--font-inter), sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  opacity: 0.4;
+  margin-top: -10px;
 }
