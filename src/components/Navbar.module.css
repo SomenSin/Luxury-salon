@@ -5,8 +5,13 @@
     width: 100%;
     z-index: 1000;
     padding: 2rem 0;
-    background: linear-gradient(to bottom, rgba(11, 11, 10, 0.8), transparent);
-    backdrop-filter: blur(10px);
+    background: linear-gradient(to bottom, rgba(11, 11, 10, 0.9), transparent);
+    backdrop-filter: blur(8px);
+    transition: all 0.4s ease;
+}
+
+.menuOpen {
+    background: #0B0B0A !important;
 }
 
 .container {
@@ -24,6 +29,8 @@
     color: #EED7B8;
     text-decoration: none;
     font-weight: 300;
+    position: relative;
+    z-index: 1001;
 }
 
 .links {
@@ -39,30 +46,109 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 300;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    opacity: 0.6;
 }
 
-.links a:hover {
-    opacity: 0.7;
+.links a:hover, .active {
+    opacity: 1 !important;
 }
 
 .bookBtn {
     border: 1px solid rgba(238, 215, 184, 0.4);
     padding: 0.8rem 1.5rem !important;
-    transition: all 0.4s ease !important;
+    opacity: 1 !important;
 }
 
 .bookBtn:hover {
     background: #EED7B8;
     color: #0B0B0A !important;
-    opacity: 1 !important;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    position: relative;
+    z-index: 1001;
+}
+
+.hamburger span {
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: #EED7B8;
+    transition: all 0.3s ease;
+}
+
+.hamburgerActive span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+}
+
+.hamburgerActive span:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
+}
+
+.mobileMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0B0B0A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobileMenuVisible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobileLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.mobileLinks a {
+    color: #EED7B8;
+    text-decoration: none;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-weight: 300;
+}
+
+.mobileBookBtn {
+    margin-top: 1rem;
+    border: 1px solid #EED7B8;
+    padding: 1rem 2rem;
+    font-size: 1rem !important;
+}
+
+.mobileFooter {
+    margin-top: 5rem;
+    text-align: center;
+    color: rgba(238, 215, 184, 0.5);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
 }
 
 @media (max-width: 900px) {
     .container {
         padding: 0 1.5rem;
-        flex-direction: column;
-        gap: 1.5rem;
     }
     
     .navbar {
@@ -70,17 +156,14 @@
     }
 
     .links {
-        gap: 1.5rem;
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
     }
 
     .logo {
-        font-size: 1.2rem;
-    }
-
-    .links a {
-        font-size: 0.7rem;
+        font-size: 1.1rem;
     }
 }
