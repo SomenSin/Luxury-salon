@@ -15,10 +15,10 @@ export default function VideoScrubberHero() {
   const [loaded, setLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const frameCount = 128;
+  const frameCount = 102;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const currentFrame = (index: number) => (
-    `${basePath}/frames/ezgif-frame-${(Math.min(254, index * 2) + 1).toString().padStart(3, '0')}.jpg`
+    `${basePath}/images/frames/From KlickPin CF Try Cozy rustic wedding decor that bring together style function and viral-worthy inspiration for ideas worth saving right now - Pin-717831628151904794_${index.toString().padStart(3, '0')}.jpg`
   );
 
   // Preload images into memory
