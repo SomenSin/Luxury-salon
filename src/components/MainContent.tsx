@@ -3,20 +3,21 @@ import Link from 'next/link';
 import styles from './MainContent.module.css';
 
 const MainContent = () => {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const services = [
-    { id: "precision-haircut", title: "Precision Haircut", price: "from $85", desc: "Crafting the perfect silhouette for your face shape.", image: "/images/services/precision_haircut.png" },
-    { id: "signature-balayage", title: "Signature Balayage", price: "from $210", desc: "Hand-painted highlights for a sun-kissed, natural look.", image: "/images/services/signature_balayage.png" },
-    { id: "deep-repair-mask", title: "Deep Repair Mask", price: "from $45", desc: "Intensive moisture treatment for damaged hair.", image: "/images/services/repair_mask.png" },
-    { id: "blowouts", title: "Blowouts", price: "from $65", desc: "Signature styling for any occasion with maximum volume.", image: "/images/services/blowout_styling.png" },
-    { id: "mens-grooming", title: "Men's Grooming", price: "from $60", desc: "Technical cut and style consultation for the modern man.", image: "/images/services/men_grooming.png" },
-    { id: "full-foil", title: "Full Foil", price: "from $180", desc: "Full head highlights with multidimensional tones.", image: "/images/services/technical_foils.png" },
-    { id: "keratin-smooth", title: "Keratin Smooth", price: "from $350", desc: "Professional smoothing treatment for frizz-free hair.", image: "/images/services/keratin_smooth.png" },
-    { id: "root-smudge", title: "Root Smudge", price: "from $95", desc: "Perfect for blending natural growth and extending color.", image: "/images/services/root_smudge.png" },
-    { id: "scalp-detox", title: "Scalp Detox", price: "from $55", desc: "Exfoliating treatment for a healthy hair foundation.", image: "/images/services/scalp_detox.png" }
+    { id: "precision-haircut", title: "Precision Haircut", price: "from $85", desc: "Crafting the perfect silhouette for your face shape.", image: `${basePath}/images/services/precision_haircut.png` },
+    { id: "signature-balayage", title: "Signature Balayage", price: "from $210", desc: "Hand-painted highlights for a sun-kissed, natural look.", image: `${basePath}/images/services/signature_balayage.png` },
+    { id: "deep-repair-mask", title: "Deep Repair Mask", price: "from $45", desc: "Intensive moisture treatment for damaged hair.", image: `${basePath}/images/services/repair_mask.png` },
+    { id: "blowouts", title: "Blowouts", price: "from $65", desc: "Signature styling for any occasion with maximum volume.", image: `${basePath}/images/services/blowout_styling.png` },
+    { id: "mens-grooming", title: "Men's Grooming", price: "from $60", desc: "Technical cut and style consultation for the modern man.", image: `${basePath}/images/services/men_grooming.png` },
+    { id: "full-foil", title: "Full Foil", price: "from $180", desc: "Full head highlights with multidimensional tones.", image: `${basePath}/images/services/technical_foils.png` },
+    { id: "keratin-smooth", title: "Keratin Smooth", price: "from $350", desc: "Professional smoothing treatment for frizz-free hair.", image: `${basePath}/images/services/keratin_smooth.png` },
+    { id: "root-smudge", title: "Root Smudge", price: "from $95", desc: "Perfect for blending natural growth and extending color.", image: `${basePath}/images/services/root_smudge.png` },
+    { id: "scalp-detox", title: "Scalp Detox", price: "from $55", desc: "Exfoliating treatment for a healthy hair foundation.", image: `${basePath}/images/services/scalp_detox.png` }
   ];
 
   const stylists = [
-    { name: "Elena Rossi", role: "Master Stylist", image: "/images/elena_rossi.png" },
+    { name: "Elena Rossi", role: "Master Stylist", image: `${basePath}/images/elena_rossi.png` },
     { name: "Marcus Chen", role: "Color Specialist", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&h=500&auto=format&fit=crop" },
     { name: "Sophia Vogt", role: "Art Director", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&h=500&auto=format&fit=crop" }
   ];

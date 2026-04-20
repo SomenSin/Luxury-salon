@@ -16,8 +16,9 @@ export default function VideoScrubberHero() {
   const [progress, setProgress] = useState(0);
 
   const frameCount = 128;
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const currentFrame = (index: number) => (
-    `/frames/ezgif-frame-${(Math.min(254, index * 2) + 1).toString().padStart(3, '0')}.jpg`
+    `${basePath}/frames/ezgif-frame-${(Math.min(254, index * 2) + 1).toString().padStart(3, '0')}.jpg`
   );
 
   // Preload images into memory
@@ -136,8 +137,8 @@ export default function VideoScrubberHero() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=4000', // Reduced for less scrolling effort
-        scrub: 0.5, // Faster, more direct response
+        end: '+=3000', // Faster progression for better feel
+        scrub: 0.1, // Near-instant track for mobile touch smoothness
         pin: true,
         anticipatePin: 1,
         fastScrollEnd: true,
