@@ -79,18 +79,23 @@
 
 .hamburger span {
     display: block;
-    width: 28px;
+    width: 26px;
     height: 1px;
     background: #EED7B8;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hamburgerActive span:first-child {
-    transform: translateY(3.5px) rotate(45deg);
+.hamburgerActive span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
 }
 
-.hamburgerActive span:last-child {
-    transform: translateY(-3.5px) rotate(-45deg);
+.hamburgerActive span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(10px);
+}
+
+.hamburgerActive span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 .mobileMenu {

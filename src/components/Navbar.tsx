@@ -46,6 +46,7 @@ const Navbar = () => {
         >
           <span></span>
           <span></span>
+          <span></span>
         </button>
 
         {/* Mobile Menu Overlay */}
