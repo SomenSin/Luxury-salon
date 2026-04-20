@@ -7,7 +7,7 @@ const Footer = () => {
             <div className={styles.container}>
                 <div className={styles.footerContent}>
                     <div className={styles.footerBrand}>
-                        <h2 className={styles.footerLogo}>LUMINA</h2>
+                        <h2 className={styles.footerLogo}>DOLLY STUDIO</h2>
                         <p>Redefining luxury hair care through precision and movement.</p>
                     </div>
 
@@ -28,7 +28,7 @@ const Footer = () => {
                 </div>
 
                 <div className={styles.footerBottom}>
-                    <p>&copy; 2024 Salon Lumina. All Rights Reserved.</p>
+                    <p>&copy; 2024 Dolly Studio. All Rights Reserved.</p>
                     <div className={styles.socials}>
                         <span>Instagram</span>
                         <span>Twitter</span>

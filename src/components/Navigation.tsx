@@ -14,7 +14,7 @@ export default function Navigation() {
   return (
     <nav className={styles.nav}>
       <Link href="#home" onClick={(e) => scrollTo(e, 'home')} className={styles.logo}>
-        Lumina
+        Dolly Studio
       </Link>
       <div className={styles.menu}>
         <a href="#services" onClick={(e) => scrollTo(e, 'services')} className={styles.link}>Services</a>

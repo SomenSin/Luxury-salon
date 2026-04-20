@@ -6,6 +6,15 @@ import styles from './VideoScrubberHero.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const LOADING_PHRASES = [
+  "SCULPTING SILHOUETTES...",
+  "CURATING RADIANCE...",
+  "DEFINING LUXURY...",
+  "CRAFTING CONFIDENCE...",
+  "STYLING THE FUTURE...",
+  "DOLLY STUDIO EXPERIENCE..."
+];
+
 export default function VideoScrubberHero() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -14,6 +23,7 @@ export default function VideoScrubberHero() {
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [phraseIndex, setPhraseIndex] = useState(0);
 
   const frameCount = 102;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
@@ -21,7 +31,16 @@ export default function VideoScrubberHero() {
     `${basePath}/images/frames/From KlickPin CF Try Cozy rustic wedding decor that bring together style function and viral-worthy inspiration for ideas worth saving right now - Pin-717831628151904794_${index.toString().padStart(3, '0')}.jpg`
   );
 
-  // Preload images into memory
+  // Rotate phrases every 1.5s
+  useEffect(() => {
+    if (loaded) return;
+    const interval = setInterval(() => {
+      setPhraseIndex(prev => (prev + 1) % LOADING_PHRASES.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [loaded]);
+
+  // Preload images into memory - Optimized for speed
   useEffect(() => {
     let loadedCount = 0;
     const preloadedImages: HTMLImageElement[] = [];
@@ -35,53 +54,60 @@ export default function VideoScrubberHero() {
           setProgress(Math.round((loadedCount / frameCount) * 100));
           resolve();
         };
-        img.onerror = () => resolve(); // Continue even if one fails
+        img.onerror = () => resolve();
         preloadedImages[index] = img;
       });
     };
 
     const loadAll = async () => {
-      // Load first frame for background visibility
-      await loadImage(0);
+      // Load first 5 frames concurrently for immediate display
+      await Promise.all([0, 1, 2, 3, 4].map(idx => loadImage(idx)));
       setImages([...preloadedImages]);
 
-      // Load all frames in chunks
-      const chunks = [];
-      for (let i = 0; i < frameCount; i += 10) {
-        const chunk = [];
-        for (let j = i; j < Math.min(i + 10, frameCount); j++) {
-          chunk.push(loadImage(j));
-        }
-        await Promise.all(chunk);
-        setImages([...preloadedImages]);
+      // Load remaining in larger parallel chunks for speed
+      const remainingIndexes = Array.from({ length: frameCount - 5 }, (_, i) => i + 5);
+      const chunkSize = 15;
+      for (let i = 0; i < remainingIndexes.length; i += chunkSize) {
+        const chunk = remainingIndexes.slice(i, i + chunkSize);
+        await Promise.all(chunk.map(idx => loadImage(idx)));
+        // Throttle state updates slightly to avoid UI thrashing
+        if (i % 30 === 0) setImages([...preloadedImages]);
       }
+      
+      setImages([...preloadedImages]);
       setLoaded(true);
     };
 
     loadAll();
   }, []);
 
-  // Lock scroll while loading
+  // Lock scroll while loading + Normalize scroll for mobile smoothness
   useEffect(() => {
     if (!loaded) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      // Smooth scroll normalization for mobile (fixes address bar jitter)
+      ScrollTrigger.normalizeScroll(true);
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => { 
+      document.body.style.overflow = ''; 
+      ScrollTrigger.normalizeScroll(false);
+    };
   }, [loaded]);
 
   useEffect(() => {
     if (!loaded || !canvasRef.current || !containerRef.current || !leftColRef.current || images.length === 0) return;
 
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext('2d', { alpha: false }); // Performance optimization
     if (!context) return;
 
-    // GSAP Sequence object
+    // Hint browser for optimization
+    canvas.style.willChange = 'transform';
+
     const sequence = { frame: 0 };
 
-    // Drawing helper for high-quality, non-pixelated rendering
     const render = (index: number) => {
       const img = images[index];
       if (!img) return;
@@ -91,24 +117,19 @@ export default function VideoScrubberHero() {
       const imgWidth = img.width;
       const imgHeight = img.height;
 
-      // Enable high-quality smoothing
       context.imageSmoothingEnabled = true;
-      context.imageSmoothingQuality = 'high';
+      context.imageSmoothingQuality = 'medium'; // Faster than 'high' but looks same on mobile
 
-      // Balanced scaling: Slightly larger than "Contain" for a premium look
-      const ratio = Math.min(canvasWidth / imgWidth, canvasHeight / imgHeight) * 1.4;
+      const ratio = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
       const newWidth = imgWidth * ratio;
       const newHeight = imgHeight * ratio;
       
-      // Perfectly centered with a slight right-align offset for aesthetic balance
-      const x = ((canvasWidth - newWidth) / 2) + 30;
+      const x = (canvasWidth - newWidth) / 2;
       const y = (canvasHeight - newHeight) / 2;
 
-      context.clearRect(0, 0, canvasWidth, canvasHeight);
       context.drawImage(img, x, y, newWidth, newHeight);
     };
 
-    // Responsive Canvas
     let resizeTimeout: NodeJS.Timeout;
     const resize = () => {
       if (!leftColRef.current) return;
@@ -126,19 +147,19 @@ export default function VideoScrubberHero() {
           render(Math.round(sequence.frame));
           ScrollTrigger.refresh();
         });
-      }, 250);
+      }, 150);
     };
 
     window.addEventListener('resize', resize);
     resize();
 
-    // GSAP Sequence - Work everywhere including mobile
+    // Smoother GSAP setup
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=3000', // Faster progression for better feel
-        scrub: 0.1, // Near-instant track for mobile touch smoothness
+        end: '+=2500', // Even tighter for mobile
+        scrub: 0.15, // Perfect balance for touch fluidity
         pin: true,
         anticipatePin: 1,
         fastScrollEnd: true,
@@ -150,67 +171,40 @@ export default function VideoScrubberHero() {
     tl.to(sequence, {
       frame: frameCount - 1,
       ease: "none",
-      overwrite: true,
       onUpdate: () => {
         const currentFrame = Math.round(sequence.frame);
         if (currentFrame !== lastRenderedFrame) {
           render(currentFrame);
           lastRenderedFrame = currentFrame;
         }
-      },
-      duration: 100
-    }, 0);
+      }
+    });
 
     // Precise text synchronization
     const textElements = gsap.utils.toArray<HTMLElement>('.hero-text');
-    const segmentDuration = 100 / textElements.length;
+    const segmentDuration = 1 / textElements.length;
 
     textElements.forEach((el, index) => {
       const start = index * segmentDuration;
       const end = (index + 1) * segmentDuration;
       
-      // For the first element, start with opacity 1 and no blur/move
       if (index === 0) {
         gsap.set(el, { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all' });
-        
-        tl.to(el,
-          { 
-            opacity: 0, 
-            y: -30, 
-            filter: 'blur(10px)',
-            pointerEvents: 'none',
-            duration: segmentDuration * 0.3,
-            ease: 'power2.in' 
-          },
-          end - (segmentDuration * 0.3)
-        );
+        tl.to(el, { 
+          opacity: 0, y: -20, filter: 'blur(10px)', pointerEvents: 'none', duration: 0.1 
+        }, 0.25);
       } else {
         tl.fromTo(el,
-          { opacity: 0, y: 30, filter: 'blur(10px)', pointerEvents: 'none' },
-          { 
-            opacity: 1, 
-            y: 0, 
-            filter: 'blur(0px)',
-            pointerEvents: 'all',
-            duration: segmentDuration * 0.3,
-            ease: 'power2.out' 
-          },
+          { opacity: 0, y: 20, filter: 'blur(10px)', pointerEvents: 'none' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'all', duration: 0.1 },
           start
         ).to(el,
-          { 
-            opacity: 0, 
-            y: -30, 
-            filter: 'blur(10px)',
-            pointerEvents: 'none',
-            duration: segmentDuration * 0.3,
-            ease: 'power2.in' 
-          },
-          end - (segmentDuration * 0.3)
+          { opacity: 0, y: -20, filter: 'blur(10px)', pointerEvents: 'none', duration: 0.1 },
+          end - 0.05
         );
       }
     });
 
-    // Initial render
     render(0);
 
     return () => {
@@ -223,7 +217,8 @@ export default function VideoScrubberHero() {
     <>
       <div className={`${styles.loadingScreen} ${loaded ? styles.fadeOut : ''}`}>
         <div className={styles.loaderContent}>
-          <div className={styles.loaderLogo}>LUMINA</div>
+          <div className={styles.loaderLogo}>DOLLY STUDIO</div>
+          <div className={styles.rotatingPhrase}>{LOADING_PHRASES[phraseIndex]}</div>
           <div className={styles.loaderBar}>
             <div 
               className={styles.loaderProgress} 
@@ -243,39 +238,36 @@ export default function VideoScrubberHero() {
 
         <div className={styles.rightCol}>
           <div className={styles.textStack}>
-            {/* Group 1: Services */}
             <div className={`hero-text ${styles.textGroup}`}>
               <span className={styles.tag}>Signature Services</span>
               <h1 className={styles.title}>What We Do.</h1>
               <p className={styles.subtitle}>
-                From master precision cuts to artistic hand-painted color. See our full menu of luxury services and pricing.
+                Precision cuts, artistic color, and premium restorative treatments. Explore the Dolly Studio menu.
               </p>
               <div className={styles.ctaContainer}>
                 <button className={styles.ctaButton} onClick={() => router.push('/services')}>Explore Services</button>
               </div>
             </div>
 
-            {/* Group 2: About */}
             <div className={`hero-text ${styles.textGroup}`}>
-              <span className={styles.tag}>Our Story</span>
+              <span className={styles.tag}>The Dolly Method</span>
               <h1 className={styles.title}>Who We Are.</h1>
               <p className={styles.subtitle}>
-                A technical approach to luxury. Meet our master stylists and learn about our commitment to precision.
+                A technical approach to aesthetic excellence. Meet our masters and rediscover your signature style.
               </p>
               <div className={styles.ctaContainer}>
-                <button className={styles.ctaButton} onClick={() => router.push('/about')}>Read Our Story</button>
+                <button className={styles.ctaButton} onClick={() => router.push('/about')}>Our Story</button>
               </div>
             </div>
 
-            {/* Group 3: Booking */}
             <div className={`hero-text ${styles.textGroup}`}>
               <span className={styles.tag}>Reservations</span>
-              <h1 className={styles.title}>Book Your Chair.</h1>
+              <h1 className={styles.title}>Your Chair Awaits.</h1>
               <p className={styles.subtitle}>
-                We manage all reservations via Call or WhatsApp to ensure a personalized luxury experience. Contact our coordinator today.
+                Personalized booking for a luxury experience. Contact our studio via Call or WhatsApp today.
               </p>
               <div className={styles.ctaContainer} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <button className={styles.ctaButton} onClick={() => window.location.href='tel:5550123456'}>Call to Book</button>
+                <button className={styles.ctaButton} onClick={() => window.location.href='tel:5550123456'}>Call Studio</button>
                 <button className={`${styles.ctaButton} ${styles.ctaSecondary}`} onClick={() => window.open('https://wa.me/15550123456', '_blank')}>WhatsApp Us</button>
               </div>
             </div>

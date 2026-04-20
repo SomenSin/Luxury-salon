@@ -12,12 +12,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Lumina Salon | Elegance & Beauty",
-  description: "Experience the ultimate luxury salon services. Discover the art of beauty with our premium haircuts, coloring, and styling.",
+  title: "Dolly Studio | Luxury Hair & Aesthetic Excellence",
+  description: "Experience high-end hair design and restorative treatments at Dolly Studio. Precision cuts and artistic color curated for the modern individual.",
   keywords: "Salon, Luxury Hair, Beauty, Hairstyle, Haircut, Hair Color",
   openGraph: {
-    title: "Lumina Salon | Elegance & Beauty",
-    description: "Experience the ultimate luxury salon services.",
+    title: "Dolly Studio | Luxury Hair & Aesthetic Excellence",
+    description: "Experience high-end hair design and restorative treatments at Dolly Studio.",
     type: "website",
   }
 };

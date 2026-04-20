@@ -19,7 +19,7 @@ const AboutPage = () => {
           <div className={styles.textBlock}>
             <h2>Crafting Beauty Since 2024</h2>
             <p>
-              Born from a passion for precision and a love for cinematic movement, Salon Lumina was established to redefine what it means to experience luxury hair care.
+              Born from a passion for precision and a love for cinematic movement, Dolly Studio was established to redefine what it means to experience luxury hair care.
             </p>
             <p>
               We believe that every appointment is an opportunity for a masterpiece. Our team of master stylists and color specialists are dedicated to one thing: bringing your unique vision to life through technical excellence and artistic flair.

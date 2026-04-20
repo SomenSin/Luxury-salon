@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          LUMINA
+          DOLLY STUDIO
         </Link>
         <div className={styles.links}>
           <Link href="/">Home</Link>

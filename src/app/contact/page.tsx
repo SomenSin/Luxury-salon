@@ -25,7 +25,7 @@ const ContactPage = () => {
             </div>
             <div className={styles.infoGroup}>
               <h3>Get in Touch</h3>
-              <p>hello@salonlumina.com</p>
+              <p>concierge@dollystudio.com</p>
               <p>(555) 012-3456</p>
             </div>
           </div>
