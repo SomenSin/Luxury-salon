@@ -233,43 +233,62 @@
     }
 }
 
-/* Luxury Loader Styles */
-.loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0B0B0A;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
+/* Loading Screen */
+.loadingScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0B0B0A;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s;
+  pointer-events: auto;
 }
 
-.loaderText {
-    font-family: var(--font-inter), sans-serif;
-    color: #EED7B8;
-    letter-spacing: 0.5em;
-    font-size: 0.8rem;
-    font-weight: 300;
+.fadeOut {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.loaderBarContainer {
-    width: 200px;
-    height: 1px;
-    background: rgba(238, 215, 184, 0.1);
-    position: relative;
-    overflow: hidden;
+.loaderContent {
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.loaderLogo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.5rem;
+  color: #EED7B8;
+  letter-spacing: 0.3em;
+  font-weight: 400;
 }
 
 .loaderBar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: #EED7B8;
-    transition: width 0.3s ease;
+  width: 100%;
+  height: 1px;
+  background: rgba(238, 215, 184, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.loaderProgress {
+  height: 100%;
+  background: #EED7B8;
+  transition: width 0.3s ease;
+}
+
+.loaderText {
+  color: #EED7B8;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
 }

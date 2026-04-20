@@ -40,27 +40,35 @@ export default function VideoScrubberHero() {
     };
 
     const loadAll = async () => {
-      // Prioritize the first 5 frames for instant visibility
-      for (let i = 0; i < 5; i++) {
-        await loadImage(i);
-      }
+      // Load first frame for background visibility
+      await loadImage(0);
       setImages([...preloadedImages]);
-      setLoaded(true); // Allow rendering to start with partial buffer
 
-      // Background load the rest in small chunks to avoid blocking the main thread
+      // Load all frames in chunks
       const chunks = [];
-      for (let i = 5; i < frameCount; i += 10) {
+      for (let i = 0; i < frameCount; i += 10) {
         const chunk = [];
         for (let j = i; j < Math.min(i + 10, frameCount); j++) {
           chunk.push(loadImage(j));
         }
         await Promise.all(chunk);
-        setImages([...preloadedImages]); // Progressively update state
+        setImages([...preloadedImages]);
       }
+      setLoaded(true);
     };
 
     loadAll();
   }, []);
+
+  // Lock scroll while loading
+  useEffect(() => {
+    if (!loaded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [loaded]);
 
   useEffect(() => {
     if (!loaded || !canvasRef.current || !containerRef.current || !leftColRef.current || images.length === 0) return;
@@ -211,7 +219,21 @@ export default function VideoScrubberHero() {
   }, [loaded, images]);
 
   return (
-    <div ref={containerRef} className={styles.heroContainer}>
+    <>
+      <div className={`${styles.loadingScreen} ${loaded ? styles.fadeOut : ''}`}>
+        <div className={styles.loaderContent}>
+          <div className={styles.loaderLogo}>LUMINA</div>
+          <div className={styles.loaderBar}>
+            <div 
+              className={styles.loaderProgress} 
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+          <div className={styles.loaderText}>{progress}%</div>
+        </div>
+      </div>
+
+      <div ref={containerRef} className={styles.heroContainer}>
       <div className={styles.splitLayout}>
         <div ref={leftColRef} className={styles.leftCol}>
           <canvas ref={canvasRef} className={styles.canvas} />
