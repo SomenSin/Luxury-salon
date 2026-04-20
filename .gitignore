@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+.env*
+temp_frames/
+ffmpeg_extracted/
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts

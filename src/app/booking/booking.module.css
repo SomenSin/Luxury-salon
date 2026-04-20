@@ -1,0 +1,181 @@
+.main {
+    background: #0B0B0A;
+    min-height: 100vh;
+    color: #EED7B8;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+.hero {
+    padding: 15rem 0 8rem 0;
+}
+
+.tag {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: #B5A18C;
+}
+
+.title {
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 300;
+}
+
+.bookingCard {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 8rem;
+    padding-bottom: 15rem;
+}
+
+.formTitle {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 4rem;
+}
+
+.bookingIntro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #B5A18C;
+    margin-bottom: 4rem;
+    font-weight: 300;
+}
+
+.directActions {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 6rem;
+}
+
+.callBtn, .whatsappBtn {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    background: rgba(238, 215, 184, 0.03);
+    border: 1px solid rgba(238, 215, 184, 0.1);
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.callBtn:hover {
+    background: rgba(238, 215, 184, 0.07);
+    border-color: #EED7B8;
+    transform: translateX(10px);
+}
+
+.whatsappBtn:hover {
+    background: rgba(154, 90, 68, 0.07);
+    border-color: #9A5A44;
+    transform: translateX(10px);
+}
+
+.btnLabel {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #EED7B8;
+    margin-bottom: 0.5rem;
+}
+
+.whatsappBtn .btnLabel {
+    color: #CBA57A;
+}
+
+.btnSub {
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+.inquiryNotes {
+    border-top: 1px solid rgba(238, 215, 184, 0.1);
+    padding-top: 4rem;
+}
+
+.inquiryNotes h3 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.inquiryNotes p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #B5A18C;
+}
+
+.policySection {
+    background: rgba(238, 215, 184, 0.03);
+    padding: 4rem;
+    border: 1px solid rgba(238, 215, 184, 0.05);
+    height: fit-content;
+}
+
+.policySection h3 {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.policySection ul {
+    padding: 0;
+    list-style: none;
+    margin-bottom: 4rem;
+}
+
+.policySection li {
+    font-size: 0.9rem;
+    color: #B5A18C;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.policySection li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #EED7B8;
+}
+
+.contactPrompt {
+    border-top: 1px solid rgba(238, 215, 184, 0.1);
+    padding-top: 3rem;
+}
+
+.contactPrompt p {
+    font-size: 0.8rem;
+    color: #B5A18C;
+    margin-bottom: 1rem;
+}
+
+.phone {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+@media (max-width: 1024px) {
+    .bookingCard {
+        grid-template-columns: 1fr;
+        gap: 6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 2rem;
+    }
+    .inputGrid {
+        grid-template-columns: 1fr;
+    }
+}

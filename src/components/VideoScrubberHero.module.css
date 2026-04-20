@@ -1,0 +1,275 @@
+.heroContainer {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: #0B0B0A;
+    overflow: hidden;
+}
+
+.canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.canvasOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 80%, #0B0B0A 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.textStack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textGroup {
+    position: absolute;
+    max-width: 500px;
+    opacity: 0;
+    text-align: left;
+}
+
+.tag {
+    display: inline-block;
+    color: #EED7B8;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: var(--font-inter), sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    color: #EED7B8;
+    letter-spacing: -0.03em;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.subtitle {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 1.1rem;
+    color: #B5A18C;
+    margin: 2rem 0 3rem 0;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+.ctaButton {
+    background: transparent;
+    border: 1px solid rgba(238, 215, 184, 0.3);
+    color: #EED7B8;
+    padding: 1.2rem 2.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.ctaButton:hover {
+    background: #EED7B8;
+    color: #0B0B0A;
+    border-color: #EED7B8;
+}
+
+.ctaSecondary {
+    border-color: rgba(154, 90, 68, 0.4);
+    color: #EED7B8;
+}
+
+.ctaSecondary:hover {
+    background: #9A5A44;
+    border-color: #9A5A44;
+    color: #0B0B0A;
+}
+
+.splitLayout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.leftCol {
+    flex: 1; /* 33.3% width */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: #0B0B0A;
+}
+
+/* Cinematic fade overlay for both sides to blend animation into the background */
+.leftCol::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(to right, #0B0B0A, transparent);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.leftCol::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(to left, #0B0B0A, transparent);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.rightCol {
+    flex: 2; /* 66.6% width */
+    position: relative;
+    z-index: 10;
+    background: #0B0B0A;
+}
+
+.rightColOverlay {
+    display: none;
+}
+
+/* Updated Mobile View with bottom-to-top fade */
+@media (max-width: 900px) {
+    .splitLayout {
+        flex-direction: column;
+        padding-top: 40px;
+    }
+
+    .leftCol {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .leftCol::before {
+        display: none; /* Only need bottom fade on mobile */
+    }
+
+    .leftCol::after {
+        width: 100%;
+        height: 30%;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        background: linear-gradient(to top, #0B0B0A, transparent);
+    }
+
+    .rightCol {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at center, rgba(11, 11, 10, 0.4) 0%, rgba(11, 11, 10, 0.7) 100%);
+        pointer-events: none; /* Let clicks pass to textGroups */
+    }
+
+    .rightCol > * {
+        pointer-events: all;
+    }
+
+    .textStack {
+        padding: 0;
+        align-items: center;
+        height: 60vh; /* Fixed height for mobile to contain absolute groups */
+        display: flex;
+        justify-content: center;
+    }
+
+    .textGroup {
+        position: absolute;
+        width: 100% !important;
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .ctaContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+        margin: 1.5rem 0 2.5rem 0;
+        text-align: center;
+    }
+}
+
+/* Luxury Loader Styles */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0B0B0A;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.loaderText {
+    font-family: var(--font-inter), sans-serif;
+    color: #EED7B8;
+    letter-spacing: 0.5em;
+    font-size: 0.8rem;
+    font-weight: 300;
+}
+
+.loaderBarContainer {
+    width: 200px;
+    height: 1px;
+    background: rgba(238, 215, 184, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.loaderBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #EED7B8;
+    transition: width 0.3s ease;
+}

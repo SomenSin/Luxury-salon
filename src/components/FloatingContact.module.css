@@ -1,0 +1,75 @@
+.container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 2000;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fab {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(238, 215, 184, 0.1);
+    cursor: pointer;
+}
+
+.fab svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* WhatsApp Styling - Luxury Copper */
+.whatsapp {
+    background: #9A5A44; /* Auburn/Copper from the design system */
+    color: #EED7B8;
+}
+
+.whatsapp:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: #EED7B8;
+    color: #0B0B0A;
+    box-shadow: 0 15px 40px rgba(154, 90, 68, 0.4);
+}
+
+/* Call Styling - Dark Luxury Glass */
+.call {
+    background: rgba(11, 11, 10, 0.8);
+    backdrop-filter: blur(10px);
+    color: #EED7B8;
+}
+
+.call:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: #EED7B8;
+    color: #0B0B0A;
+    box-shadow: 0 15px 40px rgba(238, 215, 184, 0.2);
+}
+
+@media (max-width: 768px) {
+    .container {
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+
+    .fab {
+        width: 3.2rem;
+        height: 3.2rem;
+    }
+
+    .fab svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+}

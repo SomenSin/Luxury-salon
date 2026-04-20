@@ -1,0 +1,86 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 2rem 0;
+    background: linear-gradient(to bottom, rgba(11, 11, 10, 0.8), transparent);
+    backdrop-filter: blur(10px);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    letter-spacing: 0.4em;
+    color: #EED7B8;
+    text-decoration: none;
+    font-weight: 300;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.links a {
+    color: #EED7B8;
+    text-decoration: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 300;
+    transition: opacity 0.3s ease;
+}
+
+.links a:hover {
+    opacity: 0.7;
+}
+
+.bookBtn {
+    border: 1px solid rgba(238, 215, 184, 0.4);
+    padding: 0.8rem 1.5rem !important;
+    transition: all 0.4s ease !important;
+}
+
+.bookBtn:hover {
+    background: #EED7B8;
+    color: #0B0B0A !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 0 1.5rem;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .navbar {
+        padding: 1.5rem 0;
+    }
+
+    .links {
+        gap: 1.5rem;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .links a {
+        font-size: 0.7rem;
+    }
+}

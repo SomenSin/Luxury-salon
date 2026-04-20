@@ -1,0 +1,128 @@
+.main {
+    background: #0B0B0A;
+    min-height: 100vh;
+    color: #EED7B8;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+.hero {
+    padding: 15rem 0 8rem 0;
+}
+
+.tag {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: #B5A18C;
+}
+
+.title {
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 300;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 10rem;
+    padding-bottom: 15rem;
+}
+
+.infoGroup {
+    margin-bottom: 5rem;
+}
+
+.infoGroup h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+    color: #EED7B8;
+    font-weight: 400;
+}
+
+.infoGroup p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #B5A18C;
+    font-weight: 300;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.inputRow {
+    display: flex;
+    gap: 3rem;
+}
+
+.inputRow input, .form select, .form textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(238, 215, 184, 0.2);
+    padding: 1.5rem 0;
+    color: #EED7B8;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.4s ease;
+}
+
+.inputRow input:focus, .form select:focus, .form textarea:focus {
+    border-color: #EED7B8;
+}
+
+.form select {
+    appearance: none;
+    cursor: pointer;
+}
+
+.form textarea {
+    min-height: 150px;
+}
+
+.submitBtn {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid #EED7B8;
+    color: #EED7B8;
+    padding: 1.5rem 4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.submitBtn:hover {
+    background: #EED7B8;
+    color: #0B0B0A;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 2rem;
+    }
+    .inputRow {
+        flex-direction: column;
+        gap: 3rem;
+    }
+}

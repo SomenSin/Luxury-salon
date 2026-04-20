@@ -1,0 +1,104 @@
+.footer {
+    padding: 8rem 0 4rem 0;
+    border-top: 1px solid rgba(238, 215, 184, 0.1);
+    background: #0B0B0A;
+    color: #EED7B8;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+.footerContent {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8rem;
+    flex-wrap: wrap;
+    gap: 4rem;
+}
+
+.footerLogo {
+    font-size: 2.5rem;
+    letter-spacing: 0.4em;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.footerBrand p {
+    max-width: 350px;
+    color: #B5A18C;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.footerLinks {
+    display: flex;
+    gap: 8rem;
+    flex-wrap: wrap;
+}
+
+.linkGroup h4 {
+    margin-bottom: 2.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #EED7B8;
+}
+
+.linkGroup a, .linkGroup p {
+    display: block;
+    color: #B5A18C;
+    margin-bottom: 1.5rem;
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.3s ease;
+}
+
+.linkGroup a:hover {
+    color: #EED7B8;
+}
+
+.footerBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(238, 215, 184, 0.05);
+    padding-top: 4rem;
+    color: #B5A18C;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.socials {
+    display: flex;
+    gap: 3rem;
+}
+
+.socials span {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.socials span:hover {
+    color: #EED7B8;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 0 2rem;
+    }
+    .footerLinks {
+        gap: 4rem;
+        width: 100%;
+    }
+    .linkGroup {
+        width: calc(50% - 2rem);
+    }
+}
